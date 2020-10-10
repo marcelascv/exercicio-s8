@@ -9,6 +9,7 @@
 // ../../ subir mais um nível e quando mais você colocar mais níveis vai subindo
 
 const musicas = require('../model/musicas.json');
+//const artistas = require('../model/artistas.json');
 
 const getAll = (req, res) => {
     console.log(req.url);
@@ -33,4 +34,40 @@ const getByID = (req, res) => {
     res.status(200).send(musicaFiltrada)
 }
 
-module.exports = { getAll, getByID }
+// passo-a-passo
+
+// 1: criar método getAllArtists
+// 2: filtar lista de músicas por artistas
+
+//const getAllArtists = (req, res) => {
+//    console.log(req.url);
+//    // verifica se a resposta tem status 200 (sucesso) e envia o JSON
+//    res.status(200).send(artistas);
+//}
+
+// passo-a-passo
+
+// 1: criar método getByArtists
+// 2: retornar todas as músicas do artista filtrado
+
+const getByArtists = (req, res) => {
+    const artista = req.params.artista
+
+    // método filter retorna todos os elementos que a condição for verdadeira
+    const artistaFiltrado = musicas.filter((musica) => musica.artista == artista)
+
+    res.status(200).send(artistaFiltrado);
+}
+
+// passo-a-passo
+
+// 1: criar método getAllArtists
+// 2: retornar somente o nome dos artistas da lista de música
+
+const getAllArtists = (req, res) => {
+    const artistas = musicas.map((musica) => musica.artista)
+
+    res.status(200).send(artistas)
+}
+
+module.exports = { getAll, getByID, getAllArtists, getByArtists }
